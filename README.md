@@ -1,4 +1,4 @@
-#  CivicIntel Dashboard
+# 🏛️ CivicIntel Dashboard
 
 **Autonomous Municipal Triage & Workflow Automation Platform**
 
