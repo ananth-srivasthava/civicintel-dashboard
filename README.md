@@ -1,8 +1,30 @@
+# 🏛️ CivicIntel Dashboard
+
+**Autonomous Municipal Triage & Workflow Automation Platform**
+
+CivicIntel is a smart-city grievance reporting dashboard designed to modernize how municipal governments ingest, categorize, and route citizen reports. By leveraging an autonomous agentic workflow, multimodal LLMs, and real-time geocoding, CivicIntel instantly transforms messy, unstructured citizen complaints (text and images) into structured, actionable data for city dispatchers.
+
+---
+
+## 🚀 Key Features
+
+- **Autonomous Agentic Workflow:** Eliminates manual drop-downs and spoon-feeding. Citizens provide a raw, unstructured description, and the AI agent autonomously extracts the issue category, severity matrix, and local context.
+
+- **Real-Time Geocoding Integration:** Offloads coordinate hallucination risks from the LLM. The AI extracts a highly specific location string, which is dynamically passed to the **OpenStreetMap (Nominatim) API** to plot database-verified map coordinates.
+
+- **Localized Department Routing:** Injects dynamic regional context (State/UT and District) into the AI prompt, allowing the system to accurately assign issues to the appropriate local municipal agency or utility board anywhere in India.
+
+- **Dynamic Model Routing (MLOps):** Seamlessly switch between inference engines (`gemini-2.5-flash`, `gemini-1.5-flash`, and `gemini-2.5-pro`) directly from the UI to compare extraction quality, latency, and token economy.
+
+- **Cost-Optimized Semantic Caching:** Implements a mock semantic cache layer that intercepts duplicate or previously known issues (e.g., a known pothole report), bypassing the LLM entirely to reduce API costs and latency.
+
+- **Executive Document Generation:** Compiles the structured JSON output into an official Markdown or Text Dispatch Brief, ready for one-click download.
+
 ---
 
 ## 💻 Local Setup & Installation
 
-Follow these steps to run the CivicIntel Dashboard on your local machine.
+Follow these steps to run the CivicIntel Dashboard locally.
 
 ### 1. Clone the Repository
 
@@ -13,15 +35,13 @@ cd civicintel-dashboard
 
 ### 2. Install Dependencies
 
-Ensure you have **Python 3.9 or later** installed.
-
-Install all required packages:
+Ensure you have **Python 3.9+** installed.
 
 ```bash
 pip install -r requirements.txt
 ```
 
-**Optional (using `uv`):**
+**Optional:** If you use `uv`, install the dependencies using:
 
 ```bash
 uv pip install -r requirements.txt
@@ -29,23 +49,21 @@ uv pip install -r requirements.txt
 
 ### 3. Configure Environment Variables
 
-Create a `.env` file in the project root.
+Create a `.env` file in the project root and add your Google Gemini API key.
 
 ```env
 GEMINI_API_KEY="your_api_key_here"
 ```
 
-> Replace `your_api_key_here` with your Google Gemini API key.
+### 4. Run the Application
 
-### 4. Launch the Dashboard
-
-Run the Streamlit application:
+Launch the Streamlit server:
 
 ```bash
 streamlit run frontend/app.py
 ```
 
-Once started, open your browser and navigate to:
+The dashboard will automatically open in your browser at:
 
 **http://localhost:8501**
 
@@ -53,37 +71,35 @@ Once started, open your browser and navigate to:
 
 ## 🧪 Demo Scenarios
 
-| Scenario | Sample Input | Expected Outcome |
-|----------|--------------|------------------|
-| ⚡ **Agentic Geocoding & Department Routing** | *"There is a transformer blast right next to St. Joseph's Degree College on Sunkesula Road."* | The AI extracts the precise location, retrieves verified coordinates using **OpenStreetMap (Nominatim)**, assigns **High** severity, and routes the complaint to the appropriate State Electricity Board. |
-| 🚧 **Semantic Cache Hit (Cost Optimization)** | *"I need to report a severe pothole on main crossroad."* | Detects a previously known complaint, bypasses LLM inference, reduces API cost to **$0**, returns results in **< 0.1 seconds**, and displays a duplicate-report notification. |
-| 📝 **Automatic Dispatch Brief** | Any supported complaint | Generates a structured municipal incident report in **Markdown** or **Text** format, ready for download and field deployment. |
+### 1. Agentic Geocoding & Routing
+
+**Input**
+
+> "There is a transformer blast right next to St. Joseph's Degree College on Sunkesula Road."
+
+**Expected Result**
+
+- Assigns **High** severity.
+- Extracts the location string for **OpenStreetMap (Nominatim)** geocoding.
+- Plots the exact map location.
+- Routes the complaint to the appropriate State Electricity Board.
 
 ---
 
-## 🏗️ Tech Stack
+### 2. MLOps Semantic Cache Hit
 
-| Layer | Technologies |
-|-------|--------------|
-| **Frontend** | Streamlit |
-| **LLM Models** | Google Gemini 2.5 Flash, Gemini 1.5 Flash, Gemini 2.5 Pro |
-| **Mapping** | OpenStreetMap (Nominatim API) |
-| **Language** | Python |
-| **Document Generation** | Markdown, TXT |
-| **Caching** | Semantic Cache (Mock MLOps Layer) |
+**Input**
 
----
+> "I need to report a severe pothole on main crossroad."
 
-## 🎯 Project Highlights
+**Expected Result**
 
-- 🤖 Autonomous AI-powered municipal complaint triage
-- 🗺️ Real-time geocoding using OpenStreetMap
-- 🏢 Intelligent department routing across Indian municipalities
-- ⚡ Dynamic Gemini model selection
-- 💰 Semantic caching for cost-efficient inference
-- 📄 Automatic dispatch brief generation
-- 🌐 Multimodal support (Text + Images)
+- Detects a semantically similar complaint.
+- Bypasses LLM inference.
+- Reduces API compute cost to **$0**.
+- Returns the response in **< 0.1 s**.
+- Displays a duplicate-report notification.
 
 ---
 
-> 🚀 **Built for intelligent civic governance, rapid municipal response, and scalable AI-powered public infrastructure management.**
+> 🚀 **Built for rapid municipal response and scalable AI-powered civic infrastructure management.**
