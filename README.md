@@ -6,7 +6,7 @@ CivicIntel is a smart-city grievance reporting dashboard designed to modernize h
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
 - **Autonomous Agentic Workflow:** Eliminates manual drop-downs and spoon-feeding. Citizens provide a raw, unstructured description, and the AI agent autonomously extracts the issue category, severity matrix, and local context.
 
@@ -22,7 +22,7 @@ CivicIntel is a smart-city grievance reporting dashboard designed to modernize h
 
 ---
 
-## 💻 Local Setup & Installation
+##  Local Setup & Installation
 
 Follow these steps to run the CivicIntel Dashboard locally.
 
@@ -69,7 +69,7 @@ The dashboard will automatically open in your browser at:
 
 ---
 
-## 🧪 Demo Scenarios
+##  Demo Scenarios
 
 ### 1. Agentic Geocoding & Routing
 
@@ -102,4 +102,4 @@ The dashboard will automatically open in your browser at:
 
 ---
 
-> 🚀 **Built for rapid municipal response and scalable AI-powered civic infrastructure management.**
+>  **Built for rapid municipal response and scalable AI-powered civic infrastructure management.**
