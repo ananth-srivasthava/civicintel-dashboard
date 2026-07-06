@@ -13,7 +13,7 @@ CivicIntel is a smart-city grievance reporting dashboard designed to modernize h
 *   **Intelligent Routing & Triage:** Automatically assigns an issue to the correct municipal department (e.g., Sanitation, Water Management, Public Works) and calculates a severity matrix (Low, Medium, High).
 *   **Executive Document Generation:** Compiles the structured JSON output into an official Markdown Dispatch Brief, ready for one-click download by field crews.
 *   **Real-Time Telemetry:** Features a custom CSS enterprise-grade UI that displays active pipeline latency, compute status, and token processing metrics.
-
+ 
 ---
 ## 💻 Local Setup & Installation
 
