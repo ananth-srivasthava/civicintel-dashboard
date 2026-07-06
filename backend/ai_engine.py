@@ -7,39 +7,35 @@ from PIL import Image
 # 1. Initialization & Authentication
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
-
-# Explicitly pass the key to bypass the ADC token clash
 client = genai.Client(api_key=api_key) 
 
-# 2. Mock Semantic Cache (MLOps Cost-Saving Bypass)
+# 2. Mock Semantic Cache
 def check_semantic_cache(user_text):
     mock_cache = ["street light broken on 5th", "pothole on main crossroad"]
     if any(phrase in user_text.lower() for phrase in mock_cache):
         return True
     return False
 
-# 3. Core Inference Engine
-def process_grievance(user_text, image_file=None, model_name: str = "gemini-2.5-flash"):
-    # Semantic Cache Check
+# 3. Core Autonomous Agent Engine (Now Nationally Scalable)
+def process_grievance(user_text, state, district, image_file=None, model_name: str = "gemini-2.5-flash"):
     if check_semantic_cache(user_text):
-        return '{"category": "Cache Hit", "severity": "N/A", "summary": "Issue already reported. Ticket #4928 linked.", "assigned_department": "System"}'
+        return '{"category": "Cache Hit", "severity": "N/A", "summary": "Issue already reported.", "assigned_department": "System"}'
 
-    # System Prompting for JSON enforcement
-    # 2. Inference Engine (Strict Geospatial Enforcement)
+    # --- DYNAMIC NATIONAL PROMPT ---
+    # The AI uses the state and district to infer local civic architecture automatically.
     system_instruction = (
-        "You are an expert civic infrastructure routing agent for a smart city dashboard. "
-        "Analyze the text and image (if provided). Output a valid JSON object with:\n"
-        "- 'category': (e.g., Road Hazards, Sanitation, Utilities)\n"
-        "- 'severity': (Low, Medium, High)\n"
-        "- 'summary': 1-sentence summary.\n"
-        "- 'assigned_department': The municipal department.\n"
-        "- 'latitude': Extract exact latitude ONLY if a specific city, highly recognizable landmark, or exact street is mentioned. If the location is vague (e.g., 'local cafeteria', 'main road') or unidentifiable, you MUST output JSON null (not a string). Do not guess.\n"
-        "- 'longitude': Extract exact longitude ONLY if a specific city, highly recognizable landmark, or exact street is mentioned. If vague, MUST output JSON null. Do not guess."
+        f"You are an advanced, autonomous civic infrastructure routing agent operating for {district}, {state}, India. "
+        "Your task is to analyze raw, unstructured citizen reports and extract highly specific, localized administrative data.\n\n"
+        "Output a strictly valid JSON object containing exactly these fields:\n"
+        "- 'category': Use precise municipal domains (e.g., 'Electrical Infrastructure', 'Road Network & Civil Works', 'Solid Waste Management', 'Water Supply & Sewerage', 'Public Safety & Emergency').\n"
+        "- 'severity': Classify the triage urgency (Low, Medium, High) based on immediate structural danger or public risk.\n"
+        "- 'summary': Provide a crisp, 1-sentence administrative summary.\n"
+        f"- 'assigned_department': Determine the precise local agency for {state} and {district}. Use your internal knowledge to name the correct state electricity board (e.g., APCPDCL for AP, BESCOM for Karnataka), water board, or local municipal corporation (e.g., {district} Municipal Corporation).\n"
+        f"- 'location_query': Extract the named landmark or street. CRITICAL RULE: You MUST format this string specifically for a Map API by extracting the landmark and ALWAYS appending ', {district}, {state}, India' to the end (e.g., 'St. Josephs Degree College, {district}, {state}, India'). If the report is completely vague, output JSON null."
     )
     
     contents = [f"Citizen Report: {user_text}"]
     
-    # Multimodal Integration
     if image_file is not None:
         img = Image.open(image_file)
         contents.append(img)
